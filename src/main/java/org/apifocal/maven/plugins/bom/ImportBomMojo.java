@@ -47,10 +47,10 @@ public class ImportBomMojo extends AbstractMojo {
 
     protected static final String RESOLUTIONSCOPE_IMPORT = "import";
 
-    @Parameter(property = "bomArtifact", required = true)
-    protected Dependency bomArtifactDependency;
+    @Parameter(required = true)
+    protected Dependency bomArtifact;
 
-    @Parameter(property = "recursive", defaultValue = "false", required = true)
+    @Parameter(defaultValue = "false", required = true)
     protected boolean recursive;
 
     //// injected from maven
@@ -73,19 +73,19 @@ public class ImportBomMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         try {
             // use the usual maven bom processing for dependencyManagement
-            bomArtifactDependency.setScope(RESOLUTIONSCOPE_IMPORT);
-            project.getDependencyManagement().addDependency(bomArtifactDependency);
+            bomArtifact.setScope(RESOLUTIONSCOPE_IMPORT);
+            project.getDependencyManagement().addDependency(bomArtifact);
 
             // add properties
-            Artifact bomArtifact = artifactFactory.createProjectArtifact(
-                    bomArtifactDependency.getGroupId(),
-                    bomArtifactDependency.getArtifactId(),
-                    bomArtifactDependency.getVersion());
+            Artifact bom = artifactFactory.createProjectArtifact(
+                    bomArtifact.getGroupId(),
+                    bomArtifact.getArtifactId(),
+                    bomArtifact.getVersion());
 
-            processProperties(bomArtifact, recursive);
+            processProperties(bom, recursive);
         } catch (IOException | ArtifactResolutionException | ArtifactNotFoundException ex) {
 //            getLog().error("Failed to resolve BOM artifact", ex);
-            throw new MojoExecutionException("Could not read BOM artifact " + bomArtifactDependency.toString(), ex);
+            throw new MojoExecutionException("Could not read BOM artifact " + bomArtifact.toString(), ex);
         }
     }
 
