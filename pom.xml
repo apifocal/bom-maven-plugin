@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>org.apifocal.maven.plugins</groupId>
-    <artifactId>maven-bom-plugin</artifactId>
+    <artifactId>bom-maven-plugin</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
@@ -50,19 +50,19 @@
             <artifactId>maven-artifact</artifactId>
             <version>3.3.9</version>
         </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-compat</artifactId>
             <version>3.2.5</version>
-            <type>jar</type>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugin-testing</groupId>
+            <artifactId>maven-plugin-testing-harness</artifactId>
+            <version>3.3.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
