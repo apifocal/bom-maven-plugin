@@ -89,14 +89,15 @@ public class ImportBomMojo extends AbstractMojo {
                     bomArtifact.getArtifactId(),
                     bomArtifact.getVersion());
 
-            processProperties(bom, recursive);
+            processProperties(bom);
         } catch (IOException | ArtifactResolutionException | ArtifactNotFoundException ex) {
 //            getLog().error("Failed to resolve BOM artifact", ex);
             throw new MojoExecutionException("Could not read BOM artifact " + bomArtifact.toString(), ex);
         }
     }
 
-    protected void processProperties(Artifact bomArtifact, boolean recursive) throws IOException, ArtifactResolutionException, ArtifactNotFoundException {
+    protected void processProperties(Artifact bomArtifact) throws IOException, ArtifactResolutionException, ArtifactNotFoundException {
+        getLog().debug("Processing BOM artifact " + bomArtifact);
         artifactResolver.resolve(bomArtifact, remoteRepos, localRepo);
 
         File bomFile = bomArtifact.getFile();
@@ -104,11 +105,17 @@ public class ImportBomMojo extends AbstractMojo {
         bomProject.getProperties().forEach(
                 (Object key, Object value) -> project.getProperties().putIfAbsent(key, value)
         );
+
+        if (recursive) {
+            Artifact parentArtifact = bomProject.getParentArtifact();
+            if (parentArtifact != null) {
+                processProperties(parentArtifact);
+            }
+        }
     }
 
     // see http://stackoverflow.com/questions/951643/collapsing-parent-pom-into-the-child/1001575#1001575
-    // TODO: read parent of given project too
-    private MavenProject readBareProject(final File file) throws IOException {
+    public static MavenProject readBareProject(final File file) throws IOException {
         MavenXpp3Reader reader = new MavenXpp3Reader();
         Model model = null;
         try {
