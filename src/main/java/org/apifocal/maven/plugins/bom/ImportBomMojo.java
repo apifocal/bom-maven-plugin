@@ -33,6 +33,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 import org.apache.maven.model.Dependency;
+import org.apache.maven.model.DependencyManagement;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.plugins.annotations.Component;
@@ -42,7 +43,7 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 /**
  * Imports a BOM project's dependency management, but also the declared properties.
  */
-@Mojo(name = "import-bom", defaultPhase = LifecyclePhase.INITIALIZE, threadSafe = true)
+@Mojo(name = "import-bom", defaultPhase = LifecyclePhase.INITIALIZE)
 public class ImportBomMojo extends AbstractMojo {
 
     protected static final String RESOLUTIONSCOPE_IMPORT = "import";
@@ -55,7 +56,7 @@ public class ImportBomMojo extends AbstractMojo {
 
     //// injected from maven
     ////
-    @Parameter(defaultValue = "${project}", readonly = true)
+    @Parameter(defaultValue = "${project}", readonly = true, required = true)
     protected MavenProject project;
 
     @Parameter(defaultValue = "${localRepository}")
@@ -70,11 +71,17 @@ public class ImportBomMojo extends AbstractMojo {
     @Component
     protected ArtifactFactory artifactFactory;
 
+    @Override
     public void execute() throws MojoExecutionException {
         try {
-            // use the usual maven bom processing for dependencyManagement
+            // use the usual maven bom processing to import dependencyManagement from the bom project
+            DependencyManagement dependencyManagement = project.getDependencyManagement();
+            if (dependencyManagement == null) {
+                dependencyManagement = new DependencyManagement();
+                project.getModel().setDependencyManagement(dependencyManagement);
+            }
             bomArtifact.setScope(RESOLUTIONSCOPE_IMPORT);
-            project.getDependencyManagement().addDependency(bomArtifact);
+            dependencyManagement.addDependency(bomArtifact);
 
             // add properties
             Artifact bom = artifactFactory.createProjectArtifact(

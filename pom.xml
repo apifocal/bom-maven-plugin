@@ -17,10 +17,10 @@
     <description>Import dependency management and properties from a BOM project</description>
 
     <scm>
-        <connection>scm:git:git@github.com:apifocal/maven-bom-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:apifocal/maven-bom-plugin.git</developerConnection>
+        <connection>scm:git:git@github.com:apifocal/bom-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:apifocal/bom-maven-plugin.git</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/apifocal/maven-bom-plugin</url>
+        <url>https://github.com/apifocal/bom-maven-plugin</url>
     </scm>
 
     <properties>
@@ -80,7 +80,7 @@
             <plugin>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <configuration>
-                    <goalPrefix>maven-bom-plugin</goalPrefix>
+                    <goalPrefix>bom</goalPrefix>
                     <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                 </configuration>
                 <executions>
@@ -109,6 +109,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-invoker-plugin</artifactId>
+                        <version>2.0.0</version>
                         <configuration>
                             <debug>true</debug>
                             <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
