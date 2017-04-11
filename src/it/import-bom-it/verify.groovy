@@ -19,8 +19,7 @@ assert properties."commons.jira.pid" == "12310477"
 assert properties."commons.scmPubCheckoutDirectory" == "site-content"
 
 
-// nothing imported from parent with recursive == false
-//assert properties."commons.release.version" != "39"
+// imported from common.io's parent
 assert properties."commons.surefire.version" == "2.18.1"
 assert properties."commons.surefire-report.version" == "2.18.1"
 assert properties."commons.javadoc.version" == "2.10.3"

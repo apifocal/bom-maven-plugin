@@ -40,7 +40,6 @@ public class ImportBomMojoTest extends AbstractMojoTestCase {
         ImportBomMojo myMojo = (ImportBomMojo) lookupMojo("import-bom", pom);
         assertNotNull(myMojo);
 
-        assertFalse(myMojo.recursive);
         assertEquals("org.example", myMojo.bomArtifact.getGroupId());
         assertEquals("bom", myMojo.bomArtifact.getArtifactId());
         assertEquals("0.1.0-SNAPSHOT", myMojo.bomArtifact.getVersion());

@@ -3,15 +3,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.apifocal.maven.plugins.it</groupId>
+        <artifactId>import-bom-same-build-it</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <groupId>org.apifocal.maven.plugins.it</groupId>
-    <artifactId>recursive-it</artifactId>
+    <artifactId>bom-client</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <description>An IT verifying the recursive bom processing case.</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>IT verifying BOM import within the same build</description>
 
     <build>
         <resources>
@@ -36,12 +38,12 @@
                 </executions>
                 <configuration>
                     <bomArtifact>
-                        <groupId>commons-io</groupId>
-                        <artifactId>commons-io</artifactId>
-                        <version>2.5</version>
+                        <groupId>org.apifocal.maven.plugins.it</groupId>
+                        <artifactId>bom</artifactId>
+                        <version>1.0-SNAPSHOT</version>
                         <type>pom</type>
                     </bomArtifact>
-                    <recursive>true</recursive>
+                    <recursive>false</recursive>
                 </configuration>
             </plugin>
         </plugins>

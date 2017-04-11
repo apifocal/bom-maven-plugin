@@ -15,36 +15,24 @@
  */
 package org.apifocal.maven.plugins.bom;
 
+import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.MojoExecutionException;
-
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-import org.apache.maven.model.Dependency;
-import org.apache.maven.model.DependencyManagement;
-
 /**
- * Imports a BOM project's dependency management, but also the declared properties.
+ * Imports properties from a maven POM artifact.
  */
-@Mojo(name = "import-bom", defaultPhase = LifecyclePhase.INITIALIZE)
-public class ImportBomMojo extends AbstractBomMojo {
+@Mojo(name = "import-properties", defaultPhase = LifecyclePhase.INITIALIZE)
+public class ImportPropertiesMojo extends AbstractBomMojo {
 
     @Parameter(required = true)
     protected Dependency bomArtifact;
 
     @Override
-    public void execute() throws MojoExecutionException {
-        // use the usual maven bom processing to import dependencyManagement from the bom project
-        DependencyManagement dependencyManagement = project.getDependencyManagement();
-        if (dependencyManagement == null) {
-            dependencyManagement = new DependencyManagement();
-            project.getModel().setDependencyManagement(dependencyManagement);
-        }
-        bomArtifact.setScope(RESOLUTIONSCOPE_IMPORT);
-        dependencyManagement.addDependency(bomArtifact);
-
-        // import properties
+    public void execute() throws MojoExecutionException, MojoFailureException {
         importProperties(bomArtifact);
     }
 
