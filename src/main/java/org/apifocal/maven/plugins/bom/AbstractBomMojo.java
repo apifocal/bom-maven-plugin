@@ -43,6 +43,7 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 public abstract class AbstractBomMojo extends AbstractMojo {
 
     protected static final String RESOLUTIONSCOPE_IMPORT = "import";
+    protected static final String RESOLUTIONSCOPE_PROVIDED = "provided";
 
     //// standard maven properties
     @Parameter(defaultValue = "${project}", readonly = true, required = true)

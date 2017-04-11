@@ -35,17 +35,29 @@ public class ImportBomMojo extends AbstractBomMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        // use the usual maven bom processing to import dependencyManagement from the bom project
+        addBomImport(bomArtifact.clone());
+        addBomDependency(bomArtifact.clone());
+        importProperties(bomArtifact);
+    }
+
+    protected void addBomDependency(Dependency artifact) {
+        artifact.setScope(RESOLUTIONSCOPE_PROVIDED);
+        project.getModel().addDependency(artifact.clone());
+    }
+
+    /**
+     * Use the usual maven bom processing to import dependencyManagement from the bom project.
+
+     * @param artifact
+     */
+    protected void addBomImport(Dependency artifact) {
         DependencyManagement dependencyManagement = project.getDependencyManagement();
         if (dependencyManagement == null) {
             dependencyManagement = new DependencyManagement();
             project.getModel().setDependencyManagement(dependencyManagement);
         }
-        bomArtifact.setScope(RESOLUTIONSCOPE_IMPORT);
-        dependencyManagement.addDependency(bomArtifact);
-
-        // import properties
-        importProperties(bomArtifact);
+        artifact.setScope(RESOLUTIONSCOPE_IMPORT);
+        dependencyManagement.addDependency(artifact.clone());
     }
 
 }
