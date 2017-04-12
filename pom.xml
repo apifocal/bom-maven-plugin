@@ -36,6 +36,10 @@
         <tag>HEAD</tag>
         <url>https://github.com/apifocal/bom-maven-plugin</url>
     </scm>
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>https://jenkins.apifocal.org/job/Dev/job/bom-maven-plugin/</url>
+    </ciManagement>
 
     <properties>
         <maven.version>3.3.9</maven.version>
