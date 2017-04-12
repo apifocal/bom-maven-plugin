@@ -15,6 +15,7 @@
  */
 package org.apifocal.maven.plugins.bom;
 
+import java.util.List;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -23,17 +24,19 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Imports properties from a maven POM artifact.
+ * Imports properties from a maven POM project.
  */
 @Mojo(name = "import-properties", defaultPhase = LifecyclePhase.INITIALIZE)
 public class ImportPropertiesMojo extends AbstractBomMojo {
 
     @Parameter(required = true)
-    protected Dependency bomArtifact;
+    protected List<Dependency> artifacts;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        importProperties(bomArtifact);
+        for (Dependency artifact : artifacts) {
+            importProperties(artifact);
+        }
     }
 
 }

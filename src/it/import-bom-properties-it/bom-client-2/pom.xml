@@ -3,15 +3,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.apifocal.maven.plugins.it</groupId>
-    <artifactId>import-bom-recursive-it</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <parent>
+        <groupId>org.apifocal.maven.plugins.it.bom.properties</groupId>
+        <artifactId>import-bom-properties-it</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-    <description>An IT verifying the recursive bom processing case.</description>
+    <artifactId>bom-client-2</artifactId>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <test.property.2>test.value.2</test.property.2>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apifocal.maven.plugins.it.bom.properties</groupId>
+                <artifactId>bom-client-1</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <resources>
@@ -27,22 +41,11 @@
                 <version>@project.version@</version>
                 <executions>
                     <execution>
-                        <id>import-bom</id>
-                        <phase>initialize</phase>
                         <goals>
-                            <goal>import-bom</goal>
+                            <goal>import-bom-properties</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <bomArtifact>
-                        <groupId>commons-io</groupId>
-                        <artifactId>commons-io</artifactId>
-                        <version>2.5</version>
-                        <type>pom</type>
-                    </bomArtifact>
-                    <recursive>true</recursive>
-                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -81,22 +81,21 @@ public abstract class AbstractBomMojo extends AbstractMojo {
         return new MavenProject(model);
     }
 
-    protected void processProperties(Artifact bomArtifact) throws IOException, ProjectBuildingException {
-        getLog().debug("Processing BOM artifact " + bomArtifact);
-        ProjectBuildingRequest buildingRequest = new DefaultProjectBuildingRequest(session.getProjectBuildingRequest());
-        buildingRequest.setProject(null);
-        buildingRequest.setResolveDependencies(false);
-        MavenProject bomProject = projectBuilder.build(bomArtifact, buildingRequest).getProject();
-        bomProject.getProperties().forEach((Object key, Object value) -> project.getProperties().putIfAbsent(key, value));
-    }
-
     protected void importProperties(Dependency artifactMetadata) throws MojoExecutionException {
         try {
             Artifact artifact = repoSystem.createDependencyArtifact(artifactMetadata);
-            processProperties(artifact);
-        } catch (IOException | ProjectBuildingException ex) {
+            getLog().info("Importing properties from " + artifact);
+
+            ProjectBuildingRequest buildingRequest = new DefaultProjectBuildingRequest(session.getProjectBuildingRequest());
+            buildingRequest.setProject(null);
+            buildingRequest.setResolveDependencies(false);
+            MavenProject bomProject = projectBuilder.build(artifact, buildingRequest).getProject();
+
+            bomProject.getProperties().forEach((Object key, Object value) -> project.getProperties().putIfAbsent(key, value));
+        } catch (ProjectBuildingException ex) {
             getLog().error("Failed to resolve artifact", ex);
             throw new MojoExecutionException("Could not read artifact " + artifactMetadata.toString(), ex);
         }
     }
+
 }

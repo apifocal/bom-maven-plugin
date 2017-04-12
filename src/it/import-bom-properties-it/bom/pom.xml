@@ -4,14 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.apifocal.maven.plugins.it</groupId>
-        <artifactId>import-bom-same-build-it</artifactId>
+        <groupId>org.apifocal.maven.plugins.it.bom.properties</groupId>
+        <artifactId>import-bom-properties-it</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.apifocal.maven.plugins.it</groupId>
     <artifactId>bom</artifactId>
-    <version>1.0-SNAPSHOT</version>
 
     <description>A test BOM project</description>
 

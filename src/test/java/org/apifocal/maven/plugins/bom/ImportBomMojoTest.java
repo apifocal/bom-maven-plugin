@@ -16,6 +16,7 @@
 package org.apifocal.maven.plugins.bom;
 
 import java.io.File;
+import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 public class ImportBomMojoTest extends AbstractMojoTestCase {
@@ -32,43 +33,19 @@ public class ImportBomMojoTest extends AbstractMojoTestCase {
 //        super.tearDown();
 //    }
 //
-    public void testTheMojo() throws Exception {
+    public void testImportPropertiesMojo() throws Exception {
         File pom = getTestFile("src/test/resources/test-project.xml");
         assertNotNull(pom);
         assertTrue(pom.exists());
 
-        ImportBomMojo myMojo = (ImportBomMojo) lookupMojo("import-bom", pom);
+        ImportPropertiesMojo myMojo = (ImportPropertiesMojo) lookupMojo("import-properties", pom);
         assertNotNull(myMojo);
 
-        assertEquals("org.example", myMojo.bomArtifact.getGroupId());
-        assertEquals("bom", myMojo.bomArtifact.getArtifactId());
-        assertEquals("0.1.0-SNAPSHOT", myMojo.bomArtifact.getVersion());
+        assertEquals(1, myMojo.artifacts.size());
 
-        // apparently the project is not injected in unit tests, so this below is quite useless
-//        myMojo.execute();
-//
-//        MavenProject prj = myMojo.project;
-//        Properties props = prj.getProperties();
-//        assertEquals("1.0.0-SNAPSHOT", props.getProperty("dummy-artifact.version")); // from bom-project
-//        assertEquals("1.2.0-SNAPSHOT", props.getProperty("dummy-artifact-2.version")); // from test-project
-//
-//        List<Dependency> dependencies = prj.getDependencyManagement().getDependencies();
-//        assertEquals(3, dependencies.size());
-//        dependencies.forEach((Dependency dep) -> {
-//            switch (dep.getArtifactId()) {
-//                case "dummy-artifact":
-//                    assertEquals("1.0.0-SNAPSHOT", dep.getVersion());
-//                    break;
-//                case "dummy-artifact-2":
-//                    // gets the value from the bom, even if the importing project changes it
-//                    assertEquals("2.0.0-SNAPSHOT", dep.getVersion());
-//                    break;
-//                case "dummy-artifact-3":
-//                    // this one does not have a property
-//                    assertEquals("1.1.0-SNAPSHOT", dep.getVersion());
-//                    break;
-//            }
-//        }
-//        );
+        Dependency art1 = myMojo.artifacts.get(0);
+        assertEquals("org.example", art1.getGroupId());
+        assertEquals("bom", art1.getArtifactId());
+        assertEquals("0.1.0-SNAPSHOT", art1.getVersion());
     }
 }

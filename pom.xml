@@ -64,16 +64,15 @@
             <artifactId>maven-core</artifactId>
             <version>${maven.version}</version>
         </dependency>
+
+
+
+        <!-- testing -->
         <dependency>
             <groupId>org.apache.maven</groupId>
-            <artifactId>maven-project</artifactId>
-            <version>2.2.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-            <version>3.0.8</version>
+            <artifactId>maven-compat</artifactId>
+            <version>${maven.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugin-testing</groupId>
@@ -126,8 +125,10 @@
                                 <pomInclude>*/pom.xml</pomInclude>
                             </pomIncludes>
                             <pomExcludes>
+                                <!-- fails since maven shamefully drops the list of imported dependencies form the project model -->
+                                <pomExclude>import-bom-properties-it/pom.xml</pomExclude>
                                 <!-- fails since maven shamefully cannot import properties with our plugin before validating the poms -->
-                                <pomExclude>import-bom-with-property-use-it/pom.xml</pomExclude>
+                                <pomExclude>import-properties-and-use-it/pom.xml</pomExclude>
                             </pomExcludes>
                             <postBuildHookScript>verify</postBuildHookScript>
                             <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>

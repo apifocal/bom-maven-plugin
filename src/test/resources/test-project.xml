@@ -31,12 +31,21 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>bom-maven-plugin</artifactId>
                 <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>import-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <bomArtifact>
-                        <groupId>org.example</groupId>
-                        <artifactId>bom</artifactId>
-                        <version>0.1.0-SNAPSHOT</version>
-                    </bomArtifact>
+                    <artifacts>
+                        <dependency>
+                            <groupId>org.example</groupId>
+                            <artifactId>bom</artifactId>
+                            <version>0.1.0-SNAPSHOT</version>
+                        </dependency>
+                    </artifacts>
                 </configuration>
             </plugin>
         </plugins>

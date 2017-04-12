@@ -4,14 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.apifocal.maven.plugins.it</groupId>
-        <artifactId>import-bom-same-build-it</artifactId>
+        <groupId>org.apifocal.maven.plugins.it.samebuild</groupId>
+        <artifactId>import-properties-it</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.apifocal.maven.plugins.it</groupId>
     <artifactId>bom-client</artifactId>
-    <version>1.0-SNAPSHOT</version>
 
     <description>IT verifying BOM import within the same build</description>
 
@@ -29,21 +27,20 @@
                 <version>@project.version@</version>
                 <executions>
                     <execution>
-                        <id>import-bom</id>
-                        <phase>initialize</phase>
                         <goals>
-                            <goal>import-bom</goal>
+                            <goal>import-properties</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <bomArtifact>
-                        <groupId>org.apifocal.maven.plugins.it</groupId>
+                    <artifacts>
+                    <dependency>
+                        <groupId>org.apifocal.maven.plugins.it.samebuild</groupId>
                         <artifactId>bom</artifactId>
                         <version>1.0-SNAPSHOT</version>
                         <type>pom</type>
-                    </bomArtifact>
-                    <recursive>false</recursive>
+                    </dependency>
+                    </artifacts>
                 </configuration>
             </plugin>
         </plugins>

@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.apifocal.maven.plugins.it</groupId>
-    <artifactId>import-bom-same-build-it</artifactId>
+    <groupId>org.apifocal.maven.plugins.it.bom.properties</groupId>
+    <artifactId>import-bom-properties-it</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <description>A simple IT verifying the basic use case.</description>
+    <description>An IT verifying the import-bom-properties mojo</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,7 +16,8 @@
 
     <modules>
         <module>bom</module>
-        <module>bom-client</module>
+        <module>bom-client-1</module>
+        <module>bom-client-2</module>
     </modules>
 
 </project>

@@ -33,23 +33,23 @@
                 <groupId>@project.groupId@</groupId>
                 <artifactId>@project.artifactId@</artifactId>
                 <version>@project.version@</version>
+                <extensions>true</extensions>
                 <executions>
                     <execution>
-                        <id>import-bom</id>
-                        <phase>initialize</phase>
                         <goals>
-                            <goal>import-bom</goal>
+                            <goal>import-properties</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <bomArtifact>
-                        <groupId>org.apache.karaf</groupId>
-                        <artifactId>karaf</artifactId>
-                        <packaging>pom</packaging>
-                        <version>4.0.8</version>
-                    </bomArtifact>
-                    <recursive>false</recursive>
+                    <artifacts>
+                        <dependency>
+                            <groupId>commons-io</groupId>
+                            <artifactId>commons-io</artifactId>
+                            <version>2.5</version>
+                            <type>pom</type>
+                        </dependency>
+                    </artifacts>
                 </configuration>
             </plugin>
         </plugins>
